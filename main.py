@@ -90,6 +90,9 @@ class Game:
                     Coin(self, col, row)
                 if tile == 'e':
                     Enemy(self, col, row)
+                if tile == 'T':
+                    Powerup(self, col, row)
+
                 
 
     def run(self):
