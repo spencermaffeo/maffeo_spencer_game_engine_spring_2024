@@ -127,8 +127,9 @@ class Game:
     
     def draw(self):
             self.screen.fill(BGCOLOR)
-            self.draw_grid()
+            #self.draw_grid()
             self.all_sprites.draw(self.screen)
+            #timer draw
             self.draw_text(self.screen, str(self.test_timer.countdown(45)), 24, WHITE, WIDTH/2 - 32, 2)
             pg.display.flip()
 

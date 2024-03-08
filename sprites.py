@@ -20,6 +20,8 @@ class Player(pg.sprite.Sprite):
         self.y = y * TILESIZE
         self.moneybag = 0
         self.speed = 300
+        self.status = ""
+        self.hitpoints = 100
     
     def get_keys(self):
         self.vx, self.vy = 0, 0 
@@ -81,6 +83,10 @@ class Player(pg.sprite.Sprite):
             if str(hits[0].__class__.__name__) == "PowerUp":
                 print(hits[0].__class__.__name__)
                 self.speed += 500
+            if str(hits[0].__class__.__name__) == "Mob":
+                print(hits[0].__class__.__name__)
+                print("Collided with enemy")
+                self.hitpoints -= 50
 
             
 
@@ -96,6 +102,7 @@ class Player(pg.sprite.Sprite):
         self.collide_with_walls('y')
         self.collide_with_group(self.game.coins, True)
         self.collide_with_group(self.game.power_ups, True)
+        self.collide_with_group(self.game.enemy, False)
         #self.collide_with_group(self.game.enemy, True)
         # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
         # if coin_hits:
