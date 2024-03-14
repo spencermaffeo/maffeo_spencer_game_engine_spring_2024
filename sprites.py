@@ -3,6 +3,8 @@
 
 import pygame as pg
 from settings import *
+from random import choice
+import sys
 
 class Player(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -13,7 +15,7 @@ class Player(pg.sprite.Sprite):
         self.image = pg.Surface((TILESIZE, TILESIZE))
         # added player image to sprite from the game class...
         # self.image = game.player_img
-        self.image.fill(GREEN)
+        self.image.fill(BLUE)
         self.rect = self.image.get_rect()
         self.vx, self.vy = 0, 0
         self.x = x * TILESIZE
@@ -68,7 +70,6 @@ class Player(pg.sprite.Sprite):
                     self.y = hits[0].rect.bottom
                 self.vy = 0
                 self.rect.y = self.y
-    
     def collide_with_group(self, group, kill):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
@@ -88,6 +89,23 @@ class Player(pg.sprite.Sprite):
                 print("Collided with enemy")
                 self.hitpoints -= 50
 
+
+    # def collide_with_group(self, group, dokill):
+    #     hits = pg.sprite.spritecollide(self, group, dokill)
+    #     if str(hits[0].__class__.__name__) == "Coin":
+    #         self.moneybag += 1
+    #     if str(hits[0].__class__.__name__) == "PowerUp":
+    #         print(hits[0].__class__.__name__)
+    #         effect = choice(POWER_UP_EFFECTS)
+    #         print(effect)
+    #         if effect == "super speed":
+    #             self.speed +=1000
+    #     if str(hits[0].__class__.__name__) == "Enemy":
+    #         print(hits[0].__class__.__name__)
+    #         print("you're hurt")
+    #         self.hitpoints -= 50
+
+
             
 
     def update(self):
@@ -102,23 +120,27 @@ class Player(pg.sprite.Sprite):
         self.collide_with_walls('y')
         self.collide_with_group(self.game.coins, True)
         self.collide_with_group(self.game.power_ups, True)
-        self.collide_with_group(self.game.enemy, False)
+        self.collide_with_group(self.game.enemy, True)
         #self.collide_with_group(self.game.enemy, True)
         # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
         # if coin_hits:
         #     print("I got a coin")
-        
     def collide_with_group(self, group, kill):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
             if str(hits[0].__class__.__name__) == "Coin":
+                print("you got a coin")
                 self.moneybag += 1
 
     def collide_with_group(self, group, kill):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
             if str(hits[0].__class__.__name__) == 'Enemy':
-                self.running = False
+                print("you died")
+                pg.quit()
+                sys.exit()
+
+
     
         
           
@@ -213,3 +235,16 @@ class Powerup(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
     
+
+
+
+# class Healthbar(pg.sprite.Sprite):
+#     def __init__(self, x, y, w, h):
+#         pg.sprite.Sprite.__init__(self)
+#         self.image = pg.Surface((w, h))
+#         self.image.fill(RED)
+#         self.rect = self.image.get_rect()
+#         self.rect.x = x
+#         self.rect.y = y
+#     def damage(self, newwidth):
+#         self.rect.w = newwidth

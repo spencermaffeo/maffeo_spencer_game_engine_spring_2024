@@ -40,6 +40,7 @@ class Cooldown():
         self.current_time = floor((pg.time.get_ticks())/1000)
 
 
+
 # Define game class...
 class Game:
     # Define a special method to init the properties of said class...
@@ -68,12 +69,16 @@ class Game:
     # Create run method which runs the whole GAME
     def new(self):
         self.test_timer = Cooldown()
-        print("create new game...")
+        # print("create new game...")
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.coins = pg.sprite.Group()
         self.enemy = pg.sprite.Group()
-        self.power_ups = pg.sprite.Group()
+        self.power_ups = pg.sprite.Group()   
+        self.player = pg.sprite.Group()     
+        # self.healthbar = pg.sprite.Group()
+        self.player.moneybag = 0
+    
         # self.player1 = Player(self, 1, 1)
         # for x in range(10, 20):
         #     Wall(self, x, 5)
@@ -131,6 +136,8 @@ class Game:
             self.all_sprites.draw(self.screen)
             #timer draw
             self.draw_text(self.screen, str(self.test_timer.countdown(45)), 24, WHITE, WIDTH/2 - 32, 2)
+            # self.draw_text(self.screen, str(self.moneybag), 24, WHITE, WIDTH/2 -32, 2)
+            # self.draw_text(self.screen,str(self.healthbar(100)), 24, WHITE, WIDTH/2, - 32, 2)
             pg.display.flip()
 
     def events(self):

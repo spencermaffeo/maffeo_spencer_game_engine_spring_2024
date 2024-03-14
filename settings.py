@@ -15,6 +15,6 @@ GREY = (118, 118, 118)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 
-
+POWER_UP_EFFECTS = ["super speed"]
 
 #PLAYER_SPEED = 450
