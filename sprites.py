@@ -189,9 +189,9 @@ class Enemy(pg.sprite.Sprite):
         if self.rect.y > self.game.player.rect.y:
             self.vy = -100
         self.rect.x = self.x
-        self.collide_with_walls('x')
+        # self.collide_with_walls('x')
         self.rect.y = self.y
-        self.collide_with_walls('y')
+        # self.collide_with_walls('y')
 
 
 
