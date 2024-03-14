@@ -40,17 +40,7 @@ class Player(pg.sprite.Sprite):
             self.vx *= 0.7071
             self.vy *= 0.7071
 
-    # def move(self, dx=0, dy=0):
-    #     if not self.collide_with_walls(dx, dy):
-    #         self.x += dx
-    #         self.y += dy
 
-    # def collide_with_walls(self, dx=0, dy=0):
-    #     for wall in self.game.walls:
-    #         if wall.x == self.x + dx and wall.y == self.y + dy:
-    #             return True
-    #     return False
-            
     def collide_with_walls(self, dir):
         if dir == 'x':
             hits = pg.sprite.spritecollide(self, self.game.walls, False)
@@ -90,21 +80,6 @@ class Player(pg.sprite.Sprite):
                 self.hitpoints -= 50
 
 
-    # def collide_with_group(self, group, dokill):
-    #     hits = pg.sprite.spritecollide(self, group, dokill)
-    #     if str(hits[0].__class__.__name__) == "Coin":
-    #         self.moneybag += 1
-    #     if str(hits[0].__class__.__name__) == "PowerUp":
-    #         print(hits[0].__class__.__name__)
-    #         effect = choice(POWER_UP_EFFECTS)
-    #         print(effect)
-    #         if effect == "super speed":
-    #             self.speed +=1000
-    #     if str(hits[0].__class__.__name__) == "Enemy":
-    #         print(hits[0].__class__.__name__)
-    #         print("you're hurt")
-    #         self.hitpoints -= 50
-
 
             
 
@@ -120,11 +95,8 @@ class Player(pg.sprite.Sprite):
         self.collide_with_walls('y')
         self.collide_with_group(self.game.coins, True)
         self.collide_with_group(self.game.power_ups, True)
+        # I made it so that you collide with enemy the same way you collide with a coin. 
         self.collide_with_group(self.game.enemy, True)
-        #self.collide_with_group(self.game.enemy, True)
-        # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
-        # if coin_hits:
-        #     print("I got a coin")
     def collide_with_group(self, group, kill):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
@@ -132,6 +104,7 @@ class Player(pg.sprite.Sprite):
                 print("you got a coin")
                 self.moneybag += 1
 
+# makes it so that when you collide with Enemy the game quits. 
     def collide_with_group(self, group, kill):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
@@ -235,16 +208,3 @@ class Powerup(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
     
-
-
-
-# class Healthbar(pg.sprite.Sprite):
-#     def __init__(self, x, y, w, h):
-#         pg.sprite.Sprite.__init__(self)
-#         self.image = pg.Surface((w, h))
-#         self.image.fill(RED)
-#         self.rect = self.image.get_rect()
-#         self.rect.x = x
-#         self.rect.y = y
-#     def damage(self, newwidth):
-#         self.rect.w = newwidth
