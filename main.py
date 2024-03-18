@@ -1,5 +1,4 @@
 # This file was created by Spencer Maffeo
-#Libretexts engineering: https://eng.libretexts.org/Bookshelves/Computer_Science/Programming_Languages/Making_Games_with_Python_and_Pygame_(Sweigart)/03%3A_Pygame_Basics/3.06%3A_The_QUIT_Event_and_pygame.quit()_Function#:~:text=init()%20function%3A%20it%20runs,()%20to%20terminate%20the%20program.
 
 
 
@@ -53,6 +52,7 @@ class Game:
         # setting game clock 
         self.clock = pg.time.Clock()
         self.load_data()
+        self.running = True
         # added images folder and image in the load_data method for use with the player
     def load_data(self):
         game_folder = path.dirname(__file__)
@@ -117,6 +117,8 @@ class Game:
     def update(self):
         self.test_timer.ticking()
         self.all_sprites.update()
+        if self.player.hitpoints < 1:
+                self.playing = False
     
     def draw_grid(self):
          for x in range(0, WIDTH, TILESIZE):
@@ -157,6 +159,8 @@ class Game:
             #         self.player.move(dy=1)
                 
     def show_start_screen(self):
+        if self.running == False:
+            return
         self.screen.fill(BGCOLOR)
         self.draw_text(self.screen, "Start Game - press any key to start", 24, WHITE, WIDTH/3.5 - 32, 2)
         pg.display.flip()
@@ -173,6 +177,10 @@ class Game:
                 if event.type == pg.KEYUP:
                     waiting = False
 
+
+
+
+
 # Instantiate the game... 
 g = Game()
 # use game method run to run
@@ -182,4 +190,4 @@ while True:
     g.new()
     g.run()
 
-    #wws
+    #

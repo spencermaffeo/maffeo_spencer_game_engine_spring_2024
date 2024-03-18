@@ -24,7 +24,8 @@ class Player(pg.sprite.Sprite):
         self.moneybag = 0
         self.speed = 300
         self.status = ""
-        self.hitpoints = 100
+        self.hitpoints = 1
+        self.running = True
     
     def get_keys(self):
         self.vx, self.vy = 0, 0 
@@ -102,8 +103,9 @@ class Player(pg.sprite.Sprite):
         if hits:
             if str(hits[0].__class__.__name__) == 'Enemy':
                 print("you died")
-                pg.quit()
-                sys.exit()
+                self.hitpoints -=1
+                # pg.quit()
+                # sys.exit()
             if str(hits[0].__class__.__name__) == "Coin":
                 print("you got a coin")
                 self.moneybag += 1
