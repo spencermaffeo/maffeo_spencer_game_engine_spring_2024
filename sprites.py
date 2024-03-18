@@ -1,6 +1,7 @@
 #This file was created by: Spencer Maffeo
 # Appreciation to Chris Bradfield
 
+
 import pygame as pg
 from settings import *
 from random import choice
@@ -60,24 +61,19 @@ class Player(pg.sprite.Sprite):
                     self.y = hits[0].rect.bottom
                 self.vy = 0
                 self.rect.y = self.y
+    
+
+
+    
+    
+    
     def collide_with_group(self, group, kill):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
-            if str(hits[0].__class__.__name__) == "Coin":
-                self.moneybag += 1
-            if str(hits[0].__class__.__name__) == "PowerUp":
-                print(hits[0].__class__.__name__)
-                self.speed += 25
-        if hits:
-            if str(hits[0].__class__.__name__) == "Coin":
-                self.moneybag += 1
             if str(hits[0].__class__.__name__) == "PowerUp":
                 print(hits[0].__class__.__name__)
                 self.speed += 500
-            if str(hits[0].__class__.__name__) == "Mob":
-                print(hits[0].__class__.__name__)
-                print("Collided with enemy")
-                self.hitpoints -= 50
+            
 
 
 
@@ -97,14 +93,10 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.power_ups, True)
         # I made it so that you collide with enemy the same way you collide with a coin. 
         self.collide_with_group(self.game.enemy, True)
-    def collide_with_group(self, group, kill):
-        hits = pg.sprite.spritecollide(self, group, kill)
-        if hits:
-            if str(hits[0].__class__.__name__) == "Coin":
-                print("you got a coin")
-                self.moneybag += 1
+
 
 # makes it so that when you collide with Enemy the game quits. 
+# 
     def collide_with_group(self, group, kill):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
@@ -112,6 +104,12 @@ class Player(pg.sprite.Sprite):
                 print("you died")
                 pg.quit()
                 sys.exit()
+            if str(hits[0].__class__.__name__) == "Coin":
+                print("you got a coin")
+                self.moneybag += 1
+            if str(hits[0].__class__.__name__) == "Powerup":
+                print("you got a speed boost")
+                self.speed += 150
 
 
     

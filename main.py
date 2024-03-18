@@ -1,4 +1,5 @@
 # This file was created by Spencer Maffeo
+#Libretexts engineering: https://eng.libretexts.org/Bookshelves/Computer_Science/Programming_Languages/Making_Games_with_Python_and_Pygame_(Sweigart)/03%3A_Pygame_Basics/3.06%3A_The_QUIT_Event_and_pygame.quit()_Function#:~:text=init()%20function%3A%20it%20runs,()%20to%20terminate%20the%20program.
 
 
 
@@ -86,11 +87,12 @@ class Game:
             print(row)
             for col, tile in enumerate(tiles):
                 print(col)
+                if tile == 'p':
+                    self.player = Player(self, col, row)
                 if tile == 'x':
                     print("a wall at", row, col)
                     Wall(self, col, row)
-                if tile == 'p':
-                    self.player = Player(self, col, row)
+               
                 if tile == 'C':
                     Coin(self, col, row)
                 if tile == 'e':
@@ -135,9 +137,9 @@ class Game:
             #self.draw_grid()
             self.all_sprites.draw(self.screen)
             #timer draw
-            self.draw_text(self.screen, str(self.test_timer.countdown(45)), 24, WHITE, WIDTH/2 - 32, 2)
-            # self.draw_text(self.screen, str(self.moneybag), 24, WHITE, WIDTH/2 -32, 2)
-            # self.draw_text(self.screen,str(self.healthbar(100)), 24, WHITE, WIDTH/2, - 32, 2)
+            # self.draw_text(self.screen, str(self.test_timer.countdown(45)), 24, WHITE, WIDTH/2 - 32, 2)
+            #moneybag draw
+            self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1)
             pg.display.flip()
 
     def events(self):
@@ -179,3 +181,5 @@ g.show_start_screen()
 while True:
     g.new()
     g.run()
+
+    #wws
