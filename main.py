@@ -16,6 +16,10 @@ from os import path
 # added this math function to round down the clock
 from math import floor
 
+# LEVEL1 = "map1.txt"
+# LEVEL2 = "map2.txt"
+
+
 # this 'cooldown' class is designed to help us control time
 class Cooldown():
     # sets all properties to zero when instantiated...
@@ -55,24 +59,57 @@ class Game:
         self.running = True
         # added images folder and image in the load_data method for use with the player
     def load_data(self):
-        game_folder = path.dirname(__file__)
+        self.game_folder = path.dirname(__file__)
         self.map_data = []
         '''
         The with statement is a context manager in Python. 
         It is used to ensure that a resource is properly closed or released 
         after it is used. This can help to prevent errors and leaks.
         '''
-        with open(path.join(game_folder, 'map.txt'), 'rt') as f:
+        with open(path.join(self.game_folder, 'map1.txt'), 'rt') as f:
             for line in f:
                 print(line)
                 self.map_data.append(line)
+
+
+    # def change_level(self,):
+    #     # kill all existing sprites first to save memory
+    #     for s in self.all_sprites:
+    #         s.kill()
+    #     # reset criteria for changing level
+    #     self.player.moneybag = 0
+    #     # reset map data list to empty
+    #     self.map_data = []
+    #     # open next level
+    #     with open(path.join(self.game_folder,), 'rt') as f:
+    #         for line in f:
+    #             print(line)
+    #             self.map_data.append(line)
+    #     # repopulate the level with stuff
+    #     for row, tiles in enumerate(self.map_data):
+    #         print(row)
+    #         for col, tile in enumerate(tiles):
+    #             print(col)
+    #             if tile == 'x':
+    #                 print("a wall at", row, col)
+    #                 Wall(self, col, row)
+    #             if tile == 'P':
+    #                 self.player = Player(self, col, row)
+    #             if tile == 'C':
+    #                 Coin(self, col, row)
+    #             if tile == 'e':
+    #                 Enemy(self, col, row)
+    #             if tile == 'T':
+    #                 Powerup(self, col, row)
+
+
 
     # Create run method which runs the whole GAME
     def new(self):
         self.test_timer = Cooldown()
         # print("create new game...")
         self.all_sprites = pg.sprite.Group()
-        self.walls = pg.sprite.Group()
+        self.walls = pg.sprite.Group()            
         self.coins = pg.sprite.Group()
         self.enemy = pg.sprite.Group()
         self.power_ups = pg.sprite.Group()   
@@ -119,6 +156,10 @@ class Game:
         self.all_sprites.update()
         if self.player.hitpoints < 1:
                 self.playing = False
+        if self.player.moneybag >= 5:
+            self.playing = False
+             
+            
     
     def draw_grid(self):
          for x in range(0, WIDTH, TILESIZE):

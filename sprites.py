@@ -68,12 +68,12 @@ class Player(pg.sprite.Sprite):
     
     
     
-    def collide_with_group(self, group, kill):
-        hits = pg.sprite.spritecollide(self, group, kill)
-        if hits:
-            if str(hits[0].__class__.__name__) == "PowerUp":
-                print(hits[0].__class__.__name__)
-                self.speed += 500
+    # def collide_with_group(self, group, kill):
+    #     hits = pg.sprite.spritecollide(self, group, kill)
+    #     if hits:
+    #         if str(hits[0].__class__.__name__) == "PowerUp":
+    #             print(hits[0].__class__.__name__)
+    #             self.speed += 500
             
 
 
@@ -96,11 +96,12 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.enemy, True)
 
 
-# makes it so that when you collide with Enemy the game quits. 
+# 
 # 
     def collide_with_group(self, group, kill):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
+            #when you collide with enemy your hitpoints go to 0 and the game restarts
             if str(hits[0].__class__.__name__) == 'Enemy':
                 print("you died")
                 self.hitpoints -=1
