@@ -16,8 +16,8 @@ from os import path
 # added this math function to round down the clock
 from math import floor
 
-# LEVEL1 = "map1.txt"
-# LEVEL2 = "map2.txt"
+LEVEL1 = "map1.txt"
+LEVEL2 = "map2.txt"
 
 
 # this 'cooldown' class is designed to help us control time
@@ -71,36 +71,35 @@ class Game:
                 print(line)
                 self.map_data.append(line)
 
-
-    # def change_level(self,):
-    #     # kill all existing sprites first to save memory
-    #     for s in self.all_sprites:
-    #         s.kill()
-    #     # reset criteria for changing level
-    #     self.player.moneybag = 0
-    #     # reset map data list to empty
-    #     self.map_data = []
-    #     # open next level
-    #     with open(path.join(self.game_folder,), 'rt') as f:
-    #         for line in f:
-    #             print(line)
-    #             self.map_data.append(line)
-    #     # repopulate the level with stuff
-    #     for row, tiles in enumerate(self.map_data):
-    #         print(row)
-    #         for col, tile in enumerate(tiles):
-    #             print(col)
-    #             if tile == 'x':
-    #                 print("a wall at", row, col)
-    #                 Wall(self, col, row)
-    #             if tile == 'P':
-    #                 self.player = Player(self, col, row)
-    #             if tile == 'C':
-    #                 Coin(self, col, row)
-    #             if tile == 'e':
-    #                 Enemy(self, col, row)
-    #             if tile == 'T':
-    #                 Powerup(self, col, row)
+    def change_level(self, lvl):
+        # kill all existing sprites first to save memory
+        for s in self.all_sprites:
+            s.kill()
+        # reset criteria for changing level
+        self.player.moneybag = 0
+        # reset map data list to empty
+        self.map_data = []
+        # open next level
+        with open(path.join(self.game_folder, lvl), 'rt') as f:
+            for line in f:
+                print(line)
+                self.map_data.append(line)
+        # repopulate the level with stuff
+        for row, tiles in enumerate(self.map_data):
+            print(row)
+            for col, tile in enumerate(tiles):
+                print(col)
+                if tile == 'x':
+                    print("a wall at", row, col)
+                    Wall(self, col, row)
+                if tile == 'P':
+                    self.player = Player(self, col, row)
+                if tile == 'C':
+                    Coin(self, col, row)
+                if tile == 'e':
+                    Enemy(self, col, row)
+                if tile == 'T':
+                    Powerup(self, col, row)
 
 
 
@@ -113,9 +112,11 @@ class Game:
         self.coins = pg.sprite.Group()
         self.enemy = pg.sprite.Group()
         self.power_ups = pg.sprite.Group()   
-        self.player = pg.sprite.Group()     
+        self.player = pg.sprite.Group()   
+        self.self = pg.sprite.Group()  
         # self.healthbar = pg.sprite.Group()
         self.player.moneybag = 0
+       
     
         # self.player1 = Player(self, 1, 1)
         # for x in range(10, 20):
@@ -137,7 +138,14 @@ class Game:
                 if tile == 'T':
                     Powerup(self, col, row)
 
-                
+    def update(self):
+        self.test_timer.ticking()
+        self.all_sprites.update()
+        if self.player.hitpoints < 1:
+                self.playing = False
+        if self.player.moneybag > 4:
+                self.change_level(LEVEL2)
+
 
     def run(self):
         # 
@@ -151,13 +159,7 @@ class Game:
          pg.quit()
          sys.exit()
 
-    def update(self):
-        self.test_timer.ticking()
-        self.all_sprites.update()
-        if self.player.hitpoints < 1:
-                self.playing = False
-        if self.player.moneybag >= 5:
-            self.playing = False
+  
              
             
     
