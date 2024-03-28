@@ -18,6 +18,7 @@ from math import floor
 
 LEVEL1 = "map1.txt"
 LEVEL2 = "map2.txt"
+LEVEL3 = "map3.txt"
 
 
 # this 'cooldown' class is designed to help us control time
@@ -143,8 +144,10 @@ class Game:
         self.all_sprites.update()
         if self.player.hitpoints < 1:
                 self.playing = False
-        if self.player.moneybag > 4:
+        if self.player.moneybag > 5:
                 self.change_level(LEVEL2)
+        if self.player.moneybag > 4:
+            self.change_level(LEVEL3)
 
 
     def run(self):
