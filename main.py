@@ -101,6 +101,9 @@ class Game:
                     Enemy(self, col, row)
                 if tile == 'T':
                     Powerup(self, col, row)
+                if tile == 'c':
+                    Coin2(self, col, row)
+
 
 
 
@@ -111,12 +114,14 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()            
         self.coins = pg.sprite.Group()
+        self.coins2 = pg.sprite.Group()
         self.enemy = pg.sprite.Group()
         self.power_ups = pg.sprite.Group()   
         self.player = pg.sprite.Group()   
         self.self = pg.sprite.Group()  
         # self.healthbar = pg.sprite.Group()
         self.player.moneybag = 0
+        self.player.moneybag2 =0
        
     
         # self.player1 = Player(self, 1, 1)
@@ -144,9 +149,9 @@ class Game:
         self.all_sprites.update()
         if self.player.hitpoints < 1:
                 self.playing = False
-        if self.player.moneybag > 5:
-                self.change_level(LEVEL2)
         if self.player.moneybag > 4:
+                self.change_level(LEVEL2)
+        if self.player.moneybag2 > 4:
             self.change_level(LEVEL3)
 
 
@@ -188,6 +193,7 @@ class Game:
             # self.draw_text(self.screen, str(self.test_timer.countdown(45)), 24, WHITE, WIDTH/2 - 32, 2)
             #moneybag draw
             self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1)
+            self.draw_text(self.screen, str(self.player.moneybag2), 64, WHITE, 1, 1)
             pg.display.flip()
 
     def events(self):

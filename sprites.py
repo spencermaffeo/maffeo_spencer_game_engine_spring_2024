@@ -22,6 +22,7 @@ class Player(pg.sprite.Sprite):
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         self.moneybag = 0
+        self.moneybag2 = 0
         self.speed = 300
         self.status = ""
         self.hitpoints = 1
@@ -94,6 +95,7 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.power_ups, True)
         # I made it so that you collide with enemy the same way you collide with a coin. 
         self.collide_with_group(self.game.enemy, True)
+        self.collide_with_group(self.game.coins2, True)
 
 
 # 
@@ -113,6 +115,9 @@ class Player(pg.sprite.Sprite):
             if str(hits[0].__class__.__name__) == "Powerup":
                 print("you got a speed boost")
                 self.speed += 150
+            if str(hits[0].__class__.__name__) == "Coin2":
+                print("you got a coin")
+                self.moneybag2 += 1
 
 
     
@@ -138,6 +143,20 @@ class Wall(pg.sprite.Sprite):
 class Coin(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.coins
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image.fill(YELLOW)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+
+
+class Coin2(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.coins2
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = pg.Surface((TILESIZE, TILESIZE))
