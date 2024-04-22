@@ -8,7 +8,7 @@ Create a weapon system and a way to kill enemies.
 create unique features for each level you progress such as:
 
 
-add a boss fight wand a way to beat the game. 
+add a boss fight and a way to beat the game. 
 
 
 
@@ -67,6 +67,7 @@ class Game:
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         # setting game clock 
         self.clock = pg.time.Clock()
+        self.map_data = []
         self.load_data()
         self.running = True
         # added images folder and image in the load_data method for use with the player
