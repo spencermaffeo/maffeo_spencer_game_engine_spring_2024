@@ -1,10 +1,21 @@
 # This file was created by Spencer Maffeo
 
+'''
+Beta Goal:
+
+Create a weapon system and a way to kill enemies. 
+
+create unique features for each level you progress such as:
+
+
+add a boss fight wand a way to beat the game. 
 
 
 
 
 
+
+'''
 # import libraries
 import pygame as pg
 from settings import *
@@ -61,12 +72,7 @@ class Game:
         # added images folder and image in the load_data method for use with the player
     def load_data(self):
         self.game_folder = path.dirname(__file__)
-        self.map_data = []
-        '''
-        The with statement is a context manager in Python. 
-        It is used to ensure that a resource is properly closed or released 
-        after it is used. This can help to prevent errors and leaks.
-        '''
+
         with open(path.join(self.game_folder, 'map1.txt'), 'rt') as f:
             for line in f:
                 print(line)
@@ -101,8 +107,7 @@ class Game:
                     Enemy(self, col, row)
                 if tile == 'T':
                     Powerup(self, col, row)
-                if tile == 'c':
-                    Coin2(self, col, row)
+                
 
 
 
@@ -120,8 +125,10 @@ class Game:
         self.player = pg.sprite.Group()   
         self.self = pg.sprite.Group()  
         # self.healthbar = pg.sprite.Group()
+
         self.player.moneybag = 0
-        self.player.moneybag2 =0
+
+
        
     
         # self.player1 = Player(self, 1, 1)
@@ -151,7 +158,7 @@ class Game:
                 self.playing = False
         if self.player.moneybag > 4:
                 self.change_level(LEVEL2)
-        if self.player.moneybag2 > 4:
+        if self.player.moneybag > 5:
             self.change_level(LEVEL3)
 
 
@@ -193,7 +200,6 @@ class Game:
             # self.draw_text(self.screen, str(self.test_timer.countdown(45)), 24, WHITE, WIDTH/2 - 32, 2)
             #moneybag draw
             self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1)
-            self.draw_text(self.screen, str(self.player.moneybag2), 64, WHITE, 1, 1)
             pg.display.flip()
 
     def events(self):

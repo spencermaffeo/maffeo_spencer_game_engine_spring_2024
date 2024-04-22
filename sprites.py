@@ -6,6 +6,8 @@ import pygame as pg
 from settings import *
 from random import choice
 import sys
+from pygame.sprite import Sprite
+from os import path
 
 class Player(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -14,15 +16,12 @@ class Player(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = pg.Surface((TILESIZE, TILESIZE))
-        # added player image to sprite from the game class...
-        # self.image = game.player_img
         self.image.fill(BLUE)
         self.rect = self.image.get_rect()
         self.vx, self.vy = 0, 0
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         self.moneybag = 0
-        self.moneybag2 = 0
         self.speed = 300
         self.status = ""
         self.hitpoints = 1
@@ -115,9 +114,7 @@ class Player(pg.sprite.Sprite):
             if str(hits[0].__class__.__name__) == "Powerup":
                 print("you got a speed boost")
                 self.speed += 150
-            if str(hits[0].__class__.__name__) == "Coin2":
-                print("you got a coin")
-                self.moneybag2 += 1
+            
 
 
     
@@ -154,18 +151,7 @@ class Coin(pg.sprite.Sprite):
         self.rect.y = y * TILESIZE
 
 
-class Coin2(pg.sprite.Sprite):
-    def __init__(self, game, x, y):
-        self.groups = game.all_sprites, game.coins2
-        pg.sprite.Sprite.__init__(self, self.groups)
-        self.game = game
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        self.image.fill(YELLOW)
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
-        self.rect.x = x * TILESIZE
-        self.rect.y = y * TILESIZE
+
 
         
 class Enemy(pg.sprite.Sprite):
