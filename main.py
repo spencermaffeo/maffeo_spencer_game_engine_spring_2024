@@ -85,6 +85,7 @@ class Game:
             s.kill()
         # reset criteria for changing level
         self.player.moneybag = 0
+        self.player.coinbag = 0
         # reset map data list to empty
         self.map_data = []
         # open next level
@@ -108,6 +109,8 @@ class Game:
                     Enemy(self, col, row)
                 if tile == 'T':
                     Powerup(self, col, row)
+                if tile == 'c':
+                    Coin2(self, col, row)
                 
 
 
@@ -128,6 +131,7 @@ class Game:
         # self.healthbar = pg.sprite.Group()
 
         self.player.moneybag = 0
+        self.player.coinbag = 0
 
 
        
@@ -151,6 +155,8 @@ class Game:
                     Enemy(self, col, row)
                 if tile == 'T':
                     Powerup(self, col, row)
+                if tile == 'c':
+                    Coin2(self, col, row)
 
     def update(self):
         self.test_timer.ticking()
@@ -159,7 +165,7 @@ class Game:
                 self.playing = False
         if self.player.moneybag > 4:
                 self.change_level(LEVEL2)
-        if self.player.moneybag > 5:
+        if self.player.moneybag > 2 and self.player.coinbag > 1:
             self.change_level(LEVEL3)
 
 
@@ -200,7 +206,7 @@ class Game:
             #timer draw
             # self.draw_text(self.screen, str(self.test_timer.countdown(45)), 24, WHITE, WIDTH/2 - 32, 2)
             #moneybag draw
-            self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1)
+            # self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1)
             pg.display.flip()
 
     def events(self):

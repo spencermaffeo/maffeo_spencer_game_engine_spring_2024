@@ -43,6 +43,7 @@ class Player(pg.sprite.Sprite):
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         self.moneybag = 0
+        self.coinbag = 0
         self.speed = 300
         self.status = ""
         self.hitpoints = 1
@@ -155,6 +156,9 @@ class Player(pg.sprite.Sprite):
             if str(hits[0].__class__.__name__) == "Coin":
                 print("you got a coin")
                 self.moneybag += 1
+            if str(hits[0].__class__.__name__) == "Coin2":
+                print("you got a coin")
+                self.coinbag += 1
             if str(hits[0].__class__.__name__) == "Powerup":
                 print("you got a speed boost")
                 self.speed += 150
@@ -193,6 +197,20 @@ class Coin(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
+
+class Coin2(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.coins2
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image.fill(GREEN)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+
 
 
 
