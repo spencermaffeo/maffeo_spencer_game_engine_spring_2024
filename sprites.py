@@ -97,8 +97,10 @@ class Player(pg.sprite.Sprite):
             self.vx = self.speed  
         if keys[pg.K_UP] or keys[pg.K_w]:
             self.vy = -self.speed  
+            self.facing = 'up'
         if keys[pg.K_DOWN] or keys[pg.K_s]:
             self.vy = self.speed
+            self.facing = 'down'
         if self.vx != 0 and self.vy != 0:
             self.vx *= 0.7071
             self.vy *= 0.7071
@@ -341,25 +343,31 @@ class Sword(pg.sprite.Sprite):
         super().__init__(player.game.all_sprites)
         self.player = player
         self.image = pg.Surface((40, 10), pg.SRCALPHA)  # Create a transparent surface for the sword
-        pg.draw.rect(self.image, pg.Color(YELLOW), (0, 0, 40, 10)) 
+        pg.draw.rect(self.image, pg.Color(YELLOW), (0, 0, 40, 10))
         self.rect = self.image.get_rect()
         self.damage = 1  # Set the damage inflicted by the sword
         self.swinging = False  # Flag to indicate if the sword is swinging
         self.swing_duration = 300  # Duration of the swing in milliseconds
         self.swing_timer = 0  # Timer to keep track of the swing duration
-        self.swing_angle = 90  # Initial swing angle
         self.swing_speed = 0.2  # Speed of swing rotation (adjust as needed)
         self.swing_radius = 50  # Radius of swing arc (adjust as needed)
+        self.swing_angle = 0  # Initial swing angle
         self.update_position()
 
     def update_position(self):
         # Update the position of the sword based on player's position and facing direction
         if self.player.facing == 'right':
             self.rect.midleft = self.player.rect.midright
-            self.swing_angle = -90  # Set initial swing angle for right-facing player
+            self.swing_angle = -45  # Set initial swing angle for right-facing player
         elif self.player.facing == 'left':
             self.rect.midright = self.player.rect.midleft
-            self.swing_angle = 90  # Set initial swing angle for left-facing player
+            self.swing_angle = 180  # Set initial swing angle for left-facing player
+        elif self.player.facing == 'up':
+            self.rect.midtop = self.player.rect.midtop
+            self.swing_angle = 255  # Set initial swing angle for up-facing player
+        elif self.player.facing == 'down':
+            self.rect.midbottom = self.player.rect.midbottom
+            self.swing_angle = 45  # Set initial swing angle for down-facing player
 
     def swing(self):
         # Method to initiate the sword swing action
@@ -376,20 +384,12 @@ class Sword(pg.sprite.Sprite):
             # Calculate the swing angle based on time and speed
             time_elapsed = pg.time.get_ticks() - self.swing_timer
             self.swing_angle += self.swing_speed * time_elapsed
-            
+
             # Calculate the new position of the sword based on swing arc
             x_offset = self.swing_radius * math.cos(math.radians(self.swing_angle))
             y_offset = self.swing_radius * math.sin(math.radians(self.swing_angle))
-            if self.player.facing == 'right':
-                self.rect.midleft = (self.player.rect.midright[0] + x_offset,
-                                     self.player.rect.midright[1] + y_offset)
-            elif self.player.facing == 'left':
-                self.rect.midright = (self.player.rect.midleft[0] + x_offset,
-                                      self.player.rect.midleft[1] + y_offset)
-            
-            # Rotate the sword image based on swing angle
-            self.image = pg.transform.rotate(pg.Surface((100, 10), pg.SRCALPHA), self.swing_angle)
-            self.rect = self.image.get_rect(center=self.rect.center)  # Update rect to keep it centered
+            self.rect.centerx = self.player.rect.centerx + x_offset
+            self.rect.centery = self.player.rect.centery + y_offset
 
             # Check if the swing duration has elapsed
             if time_elapsed > self.swing_duration:

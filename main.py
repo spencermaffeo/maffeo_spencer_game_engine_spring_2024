@@ -81,7 +81,6 @@ class Game:
 
     def change_level(self, lvl):
         # kill all existing sprites first to save memory
-        # self.player = Player(self, col, row)
         for s in self.all_sprites:
             s.kill()
         # reset criteria for changing level
@@ -130,7 +129,6 @@ class Game:
         self.player = pg.sprite.Group()   
         self.self = pg.sprite.Group()  
         # self.healthbar = pg.sprite.Group()
-        # self.player = Player(self, col, row)
         self.player.moneybag = 0
         self.player.coinbag = 0
 
