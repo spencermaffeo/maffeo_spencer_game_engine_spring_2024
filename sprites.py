@@ -47,6 +47,7 @@ class Player(pg.sprite.Sprite):
         self.y = y * TILESIZE
         self.moneybag = 0
         self.coinbag = 0
+        self.unlock = 0
         self.speed = 300
         self.status = ""
         self.hitpoints = 1
@@ -134,6 +135,25 @@ class Player(pg.sprite.Sprite):
                 self.vy = 0
                 self.rect.y = self.y
     
+    def collide_with_door(self, dir):
+        if dir == 'x':
+            hits = pg.sprite.spritecollide(self, self.game.door, False)
+            if hits:
+                if self.vx > 0:
+                    self.x = hits[0].rect.left - self.rect.width
+                if self.vx < 0:
+                    self.x = hits[0].rect.right
+                self.vx = 0
+                self.rect.x = self.x
+        if dir == 'y':
+            hits = pg.sprite.spritecollide(self, self.game.door, False)
+            if hits:
+                if self.vy > 0:
+                    self.y = hits[0].rect.top - self.rect.height
+                if self.vy < 0:
+                    self.y = hits[0].rect.bottom
+                self.vy = 0
+                self.rect.y = self.y
 
 
     
@@ -181,11 +201,14 @@ class Player(pg.sprite.Sprite):
         self.rect.y = self.y
         # add collision later
         self.collide_with_walls('y')
+        self.collide_with_door('x')
+        self.collide_with_door('y')
         self.collide_with_group(self.game.coins, True)
         self.collide_with_group(self.game.power_ups, True)
         # I made it so that you collide with enemy the same way you collide with a coin. 
         self.collide_with_group(self.game.enemy, True)
         self.collide_with_group(self.game.coins2, True)
+        self.collide_with_group(self.game.switch, True)
         if self.sword:
             # Only check for collisions if the player has a sword
             hits = pg.sprite.spritecollide(self.sword, self.game.enemy, True)
@@ -213,6 +236,11 @@ class Player(pg.sprite.Sprite):
             if str(hits[0].__class__.__name__) == "Powerup":
                 print("you got a speed boost")
                 self.speed += 150
+            if str(hits[0].__class__.__name__) == "Switch":
+                print("you unlocked the door")
+                self.unlock += 5
+            
+        
             
 
 
@@ -395,3 +423,40 @@ class Sword(pg.sprite.Sprite):
             if time_elapsed > self.swing_duration:
                 self.swinging = False  # End the swing if duration is over
                 self.kill()  # Remove the sword from the game
+
+# written by chat gpt
+class Switch(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.switch
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image.fill(PURPLE)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+
+
+#written by chat gpt
+class Door(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.door
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image.fill(RED)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+        self.unlock = 0
+
+        if self.unlock > 4:
+            self.image.fill(GREEN)
+
+
+
+    

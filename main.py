@@ -61,6 +61,7 @@ class Cooldown():
 class Game:
     # Define a special method to init the properties of said class...
     def __init__(self):
+        self.all_sprites = pg.sprite.Group()
         # init pygame
         pg.init()
         # set size of screen and be the screen
@@ -70,6 +71,7 @@ class Game:
         self.map_data = []
         self.load_data()
         self.running = True
+
         # added images folder and image in the load_data method for use with the player
     def load_data(self):
         self.game_folder = path.dirname(__file__)
@@ -78,6 +80,10 @@ class Game:
             for line in f:
                 print(line)
                 self.map_data.append(line)
+    def create_switches(self):
+        # Create switches and place them in different rooms
+        Switch(self, 2, 2)
+        Switch(self, 8, 8)
 
     def change_level(self, lvl):
         # kill all existing sprites first to save memory
@@ -99,7 +105,6 @@ class Game:
             for col, tile in enumerate(tiles):
                 print(col)
                 if tile == 'x':
-                    print("a wall at", row, col)
                     Wall(self, col, row)
                 if tile == 'P':
                     self.player = Player(self, col, row)
@@ -111,6 +116,11 @@ class Game:
                     Powerup(self, col, row)
                 if tile == 'c':
                     Coin2(self, col, row)
+                if tile == 'S':
+                    Switch(self,col, row)
+                if tile == 'D':
+                    Door(self, col, row)
+
                 
 
 
@@ -128,6 +138,8 @@ class Game:
         self.power_ups = pg.sprite.Group()   
         self.player = pg.sprite.Group()   
         self.self = pg.sprite.Group()  
+        self.door = pg.sprite.Group()
+        self.switch = pg.sprite.Group()
         # self.healthbar = pg.sprite.Group()
         self.player.moneybag = 0
         self.player.coinbag = 0
@@ -156,6 +168,11 @@ class Game:
                     Powerup(self, col, row)
                 if tile == 'c':
                     Coin2(self, col, row)
+                if tile == 'S':
+                    Switch(self,col, row)
+                if tile == 'D':
+                    Door(self, col, row)
+
 
     def update(self):
         self.test_timer.ticking()
