@@ -92,6 +92,7 @@ class Game:
         # reset criteria for changing level
         self.player.moneybag = 0
         self.player.coinbag = 0
+        self.player.unlock = 0
         # reset map data list to empty
         self.map_data = []
         # open next level
@@ -143,6 +144,7 @@ class Game:
         # self.healthbar = pg.sprite.Group()
         self.player.moneybag = 0
         self.player.coinbag = 0
+        self.player.unlock = 0
 
 
        
@@ -183,6 +185,9 @@ class Game:
                 self.change_level(LEVEL2)
         if self.player.moneybag > 2 and self.player.coinbag > 1:
             self.change_level(LEVEL3)
+        if self.player.unlock > 4:
+            for door in self.door:
+                door.kill()
 
 
     def run(self):

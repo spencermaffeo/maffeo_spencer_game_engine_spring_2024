@@ -452,11 +452,7 @@ class Door(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
-        self.unlock = 0
-
-        if self.unlock > 4:
-            self.image.fill(GREEN)
-
+        
 
 
     
