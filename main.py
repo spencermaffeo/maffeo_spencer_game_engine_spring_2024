@@ -131,7 +131,6 @@ class Game:
     def new(self):
         self.test_timer = Cooldown()
         # print("create new game...")
-        self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()            
         self.coins = pg.sprite.Group()
         self.coins2 = pg.sprite.Group()
