@@ -127,6 +127,8 @@ class Game:
 
 
 
+
+
     # Create run method which runs the whole GAME
     def new(self):
         self.test_timer = Cooldown()
