@@ -80,10 +80,10 @@ class Game:
             for line in f:
                 print(line)
                 self.map_data.append(line)
-    def create_switches(self):
-        # Create switches and place them in different rooms
-        Switch(self, 2, 2)
-        Switch(self, 8, 8)
+    # def create_switches(self):
+    #     # Create switches and place them in different rooms
+    #     Switch(self, 2, 2)
+    #     Switch(self, 8, 8)
 
     def change_level(self, lvl):
         # kill all existing sprites first to save memory
@@ -93,6 +93,9 @@ class Game:
         self.player.moneybag = 0
         self.player.coinbag = 0
         self.player.unlock = 0
+        self.bbag = 1
+        self.b2bag = 1
+        self.b3bag = 1
         # reset map data list to empty
         self.map_data = []
         # open next level
@@ -121,10 +124,13 @@ class Game:
                     Switch(self,col, row)
                 if tile == 'D':
                     Door(self, col, row)
-
+                if tile == 'B':
+                    Block(self, col, row)
+                if tile == 'Z':
+                    Block2(self, col, row)
+                if tile == 'V':
+                    Block3(self, col, row)
                 
-
-
 
 
 
@@ -133,6 +139,7 @@ class Game:
     def new(self):
         self.test_timer = Cooldown()
         # print("create new game...")
+        self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()            
         self.coins = pg.sprite.Group()
         self.coins2 = pg.sprite.Group()
@@ -142,13 +149,18 @@ class Game:
         self.self = pg.sprite.Group()  
         self.door = pg.sprite.Group()
         self.switch = pg.sprite.Group()
+        self.blocks = pg.sprite.Group()
+        self.blocks2 = pg.sprite.Group()
+        self.blocks3 = pg.sprite.Group()
         # self.healthbar = pg.sprite.Group()
         self.player.moneybag = 0
         self.player.coinbag = 0
         self.player.unlock = 0
+        self.bbag = 1
+        self.b2bag = 1
+        self.b3bag = 1
+        
 
-
-       
     
         # self.player1 = Player(self, 1, 1)
         # for x in range(10, 20):
@@ -175,6 +187,16 @@ class Game:
                     Switch(self,col, row)
                 if tile == 'D':
                     Door(self, col, row)
+                if tile == 'B':
+                    Block(self, col, row)
+                if tile == 'Z':
+                    Block2(self, col, row)
+                if tile == 'V':
+                    Block3(self, col, row)
+
+                    
+    
+    
 
 
     def update(self):
@@ -187,6 +209,10 @@ class Game:
         if self.player.moneybag > 2 and self.player.coinbag > 1:
             self.change_level(LEVEL3)
         if self.player.unlock > 4:
+            for door in self.door:
+                door.kill()
+        if self.bbag ==3 and self.b2bag == 2 and self.b3bag == 3: 
+            print("you opened the door")
             for door in self.door:
                 door.kill()
 
@@ -228,7 +254,7 @@ class Game:
             #timer draw
             # self.draw_text(self.screen, str(self.test_timer.countdown(45)), 24, WHITE, WIDTH/2 - 32, 2)
             #moneybag draw
-            # self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1)
+            self.draw_text(self.screen, str(self.player.bbag), 64, WHITE, 1, 1)
             pg.display.flip()
 
     def events(self):

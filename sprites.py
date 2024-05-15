@@ -48,6 +48,9 @@ class Player(pg.sprite.Sprite):
         self.moneybag = 0
         self.coinbag = 0
         self.unlock = 0
+        self.bbag = 1
+        self.b2bag = 1
+        self.b3bag = 1
         self.speed = 300
         self.status = ""
         self.hitpoints = 1
@@ -88,6 +91,18 @@ class Player(pg.sprite.Sprite):
             for enemy in self.game.enemy:
                 if pg.sprite.collide_rect(self.sword, enemy):
                     enemy.take_damage(self.sword.damage)
+
+            for blocks in self.game.blocks:
+                if pg.sprite.collide_rect(self.sword, blocks):
+                    blocks.take_damage(self.sword.damage)
+
+            for blocks2 in self.game.blocks2:
+                if pg.sprite.collide_rect(self.sword, blocks2):
+                    blocks2.take_damage(self.sword.damage)
+
+            for blocks3 in self.game.blocks3:
+                if pg.sprite.collide_rect(self.sword, blocks3):
+                    blocks3.take_damage(self.sword.damage)
     
     def get_keys(self):
         self.vx, self.vy = 0, 0 
@@ -214,6 +229,18 @@ class Player(pg.sprite.Sprite):
             hits = pg.sprite.spritecollide(self.sword, self.game.enemy, True)
             for enemy in hits:
                 enemy.take_damage(self.sword.damage)
+            hits = pg.sprite.spritecollide(self.sword, self.game.enemy, True)
+            for blocks in hits:
+                blocks.take_damage(self.sword.damage)
+
+            hits = pg.sprite.spritecollide(self.sword, self.game.enemy, True)
+            for blocks2 in hits:
+                blocks2.take_damage(self.sword.damage)
+            
+            hits = pg.sprite.spritecollide(self.sword, self.game.enemy, True)
+            for blocks3 in hits:
+                blocks3.take_damage(self.sword.damage)
+            
 
 
 # 
@@ -242,14 +269,6 @@ class Player(pg.sprite.Sprite):
             
         
             
-
-
-    
-        
-          
-        # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
-        # if coin_hits:
-        #     print("I got a coin")
         
 class Wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -424,7 +443,7 @@ class Sword(pg.sprite.Sprite):
                 self.swinging = False  # End the swing if duration is over
                 self.kill()  # Remove the sword from the game
 
-# written by chat gpt
+
 class Switch(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.switch
@@ -439,7 +458,7 @@ class Switch(pg.sprite.Sprite):
         self.rect.y = y * TILESIZE
 
 
-#written by chat gpt
+
 class Door(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.door
@@ -453,6 +472,511 @@ class Door(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
         
+
+
+
+class Block(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.blocks
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.player = Player
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image.fill(PINK)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+        self.hitpoints = 100
+        self.bbag = 1
+
+        
+    def take_damage(self, damage):
+        self.hitpoints -= damage
+        
+        if self.hitpoints == 99:
+            self.image.fill(RED)
+            self.bbag +=2
+        if self.hitpoints == 98:
+            self.image.fill(PURPLE)
+            self.bbag -= 1
+        if self.hitpoints == 97:
+            self.image.fill(PINK)
+            self.bbag -= 1
+        if self.hitpoints == 96:
+            self.image.fill(RED)
+            self.bbag +=2
+        if self.hitpoints == 95:
+            self.image.fill(PURPLE)
+            self.bbag -= 1
+        if self.hitpoints == 94:
+            self.image.fill(PINK)
+            self.bbag -= 1
+        if self.hitpoints == 93:
+            self.image.fill(RED)
+            self.bbag =3
+        if self.hitpoints == 92:
+            self.image.fill(PURPLE)
+            self.bbag = 2
+        if self.hitpoints == 91:
+            self.image.fill(PINK)
+            self.bbag = 1
+        if self.hitpoints == 90:
+            self.image.fill(RED)
+            self.bbag =3
+        if self.hitpoints == 89:
+            self.image.fill(PURPLE)
+            self.bbag = 2
+        if self.hitpoints == 88:
+            self.image.fill(PINK)
+            self.bbag = 1
+        # if self.hitpoints <= 87:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints <= 86:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints <= 85:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        # if self.hitpoints <= 84:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints <= 83:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints <= 82:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        # if self.hitpoints <= 81:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints <= 80:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints <= 79:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        # if self.hitpoints <= 78:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints <= 77:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints <= 76:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        # if self.hitpoints <= 75:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints <= 74:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints <= 73:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        # if self.hitpoints <= 72:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints <= 71:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints <= 70:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        # if self.hitpoints <= 69:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints <= 68:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints <= 67:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        # if self.hitpoints <= 66:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints <= 65:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints <= 64:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        # if self.hitpoints <= 63:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints <= 62:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints <= 61:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        # if self.hitpoints <= 60:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints <= 59:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints <= 58:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        # if self.hitpoints <= 57:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints <= 56:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints <= 55:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        # if self.hitpoints <= 54:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints <= 53:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints <= 52:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        
+
+
+
+class Block2(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.blocks2
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image.fill(PINK)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+        self.hitpoints = 100
+        
+        
+    def take_damage(self, damage):
+        self.hitpoints -= damage
+        if self.hitpoints == 99:
+            self.image.fill(RED)
+            self.b2bag += 2
+        if self.hitpoints == 98:
+            self.image.fill(PURPLE)
+            self.b2bag -= 1
+        if self.hitpoints == 97:
+            self.image.fill(PINK)
+            self.b2bag -= 1
+        if self.hitpoints == 96:
+            self.image.fill(RED)
+            self.b2bag += 2
+        if self.hitpoints == 95:
+            self.image.fill(PURPLE)
+            self.b2bag -= 1
+        if self.hitpoints == 94:
+            self.image.fill(PINK)
+            self.b2bag -= 1
+#
+#
+#
+#         if self.hitpoints <= 93:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 92:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 91:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 90:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 89:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 88:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 87:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 86:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 85:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 84:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 83:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 82:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 81:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 80:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 79:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 78:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 77:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 76:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 75:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 74:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 73:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 72:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 71:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 70:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 69:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 68:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 67:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 66:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 65:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 64:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 63:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 62:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 61:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 60:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 59:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 58:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 57:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 56:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 55:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 54:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 53:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 52:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+        
+        
+        
+
+
+class Block3(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.blocks3
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image.fill(PINK)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+        self.hitpoints = 100
+
+        
+    def take_damage(self, damage):
+        self.hitpoints -= damage
+        if self.hitpoints == 99:
+            self.image.fill(RED)
+            self.b3bag += 2
+        if self.hitpoints == 98:
+            self.image.fill(PURPLE)
+            self.b3bag -= 1
+        if self.hitpoints == 97:
+            self.image.fill(PINK)
+            self.b3bag -= 1
+        if self.hitpoints == 96:
+            self.image.fill(RED)
+            self.b3bag += 2
+        if self.hitpoints == 95:
+            self.image.fill(PURPLE)
+            self.b3bag -= 1
+        if self.hitpoints == 94:
+            self.image.fill(PINK)
+            self.b3bag -= 1
+        if self.hitpoints == 93:
+            self.image.fill(RED)
+            self.b3bag =3
+        if self.hitpoints == 92:
+            self.image.fill(PURPLE)
+            self.b3bag = 2
+#         if self.hitpoints <= 91:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 90:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 89:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 88:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 87:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 86:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 85:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 84:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 83:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 82:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 81:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 80:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 79:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 78:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 77:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 76:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 75:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 74:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 73:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 72:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 71:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 70:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 69:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 68:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 67:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 66:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 65:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 64:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 63:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 62:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 61:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 60:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 59:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 58:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 57:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 56:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 55:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+#         if self.hitpoints <= 54:
+#             self.image.fill(RED)
+#             self.b3bag =3
+#         if self.hitpoints <= 53:
+#             self.image.fill(PURPLE)
+#             self.b3bag = 2
+#         if self.hitpoints <= 52:
+#             self.image.fill(PINK)
+#             self.b3bag = 1
+        
+
+    
+       
 
 
     
