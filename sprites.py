@@ -489,48 +489,48 @@ class Block(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
         self.hitpoints = 100
-        self.bbag = 1
+        # self.bbag = 1
 
         
     def take_damage(self, damage):
         self.hitpoints -= damage
-        
+    
         if self.hitpoints == 99:
             self.image.fill(RED)
-            self.bbag +=2
+            self.game.player.bbag += 2  # Accessing bbag through an instance of Player
         if self.hitpoints == 98:
             self.image.fill(PURPLE)
-            self.bbag -= 1
-        if self.hitpoints == 97:
-            self.image.fill(PINK)
-            self.bbag -= 1
-        if self.hitpoints == 96:
-            self.image.fill(RED)
-            self.bbag +=2
-        if self.hitpoints == 95:
-            self.image.fill(PURPLE)
-            self.bbag -= 1
-        if self.hitpoints == 94:
-            self.image.fill(PINK)
-            self.bbag -= 1
-        if self.hitpoints == 93:
-            self.image.fill(RED)
-            self.bbag =3
-        if self.hitpoints == 92:
-            self.image.fill(PURPLE)
-            self.bbag = 2
-        if self.hitpoints == 91:
-            self.image.fill(PINK)
-            self.bbag = 1
-        if self.hitpoints == 90:
-            self.image.fill(RED)
-            self.bbag =3
-        if self.hitpoints == 89:
-            self.image.fill(PURPLE)
-            self.bbag = 2
-        if self.hitpoints == 88:
-            self.image.fill(PINK)
-            self.bbag = 1
+            self.game.player.bbag -= 1  # Accessing bbag through an instance of Player
+        # if self.hitpoints == 97:
+        #     self.image.fill(PINK)
+        #     self.bbag -= 1
+        # if self.hitpoints == 96:
+        #     self.image.fill(RED)
+        #     self.bbag +=2
+        # if self.hitpoints == 95:
+        #     self.image.fill(PURPLE)
+        #     self.bbag -= 1
+        # if self.hitpoints == 94:
+        #     self.image.fill(PINK)
+        #     self.bbag -= 1
+        # if self.hitpoints == 93:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints == 92:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints == 91:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
+        # if self.hitpoints == 90:
+        #     self.image.fill(RED)
+        #     self.bbag =3
+        # if self.hitpoints == 89:
+        #     self.image.fill(PURPLE)
+        #     self.bbag = 2
+        # if self.hitpoints == 88:
+        #     self.image.fill(PINK)
+        #     self.bbag = 1
         # if self.hitpoints <= 87:
         #     self.image.fill(RED)
         #     self.bbag =3
@@ -656,6 +656,7 @@ class Block2(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
         self.hitpoints = 100
+        # self.b2bag = 1
         
         
     def take_damage(self, damage):
@@ -825,6 +826,7 @@ class Block3(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
         self.hitpoints = 100
+        # self.b3bag = 1
 
         
     def take_damage(self, damage):

@@ -211,7 +211,7 @@ class Game:
         if self.player.unlock > 4:
             for door in self.door:
                 door.kill()
-        if self.bbag ==3 and self.b2bag == 2 and self.b3bag == 3: 
+        if self.player.bbag ==3 and self.player.b2bag == 3 and self.player.b3bag == 3: 
             print("you opened the door")
             for door in self.door:
                 door.kill()
