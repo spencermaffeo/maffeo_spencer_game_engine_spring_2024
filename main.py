@@ -130,7 +130,11 @@ class Game:
                     Block2(self, col, row)
                 if tile == 'V':
                     Block3(self, col, row)
-                
+                if tile == 'I':
+                    Indicator1(self, col, row)
+                if tile == 'i':
+                    Indicator2(self, col, row)
+                   
 
 
 
@@ -152,6 +156,8 @@ class Game:
         self.blocks = pg.sprite.Group()
         self.blocks2 = pg.sprite.Group()
         self.blocks3 = pg.sprite.Group()
+        self.Indicator1 = pg.sprite.Group()
+        self.Indicator2 = pg.sprite.Group()
         # self.healthbar = pg.sprite.Group()
         self.player.moneybag = 0
         self.player.coinbag = 0
@@ -193,6 +199,13 @@ class Game:
                     Block2(self, col, row)
                 if tile == 'V':
                     Block3(self, col, row)
+                if tile == 'I':
+                    Indicator1(self, col, row)
+                if tile == 'i':
+                    Indicator2(self, col, row)
+                
+
+            
 
                     
     
@@ -204,15 +217,14 @@ class Game:
         self.all_sprites.update()
         if self.player.hitpoints < 1:
                 self.playing = False
-        if self.player.moneybag > 4:
+        if self.player.moneybag > 3:
                 self.change_level(LEVEL2)
         if self.player.moneybag > 2 and self.player.coinbag > 1:
             self.change_level(LEVEL3)
         if self.player.unlock > 4:
             for door in self.door:
                 door.kill()
-        if self.player.bbag ==3 and self.player.b2bag == 3 and self.player.b3bag == 3: 
-            print("you opened the door")
+        if self.player.bbag ==3 and self.player.b2bag == 2 and self.player.b3bag == 2: 
             for door in self.door:
                 door.kill()
 
@@ -254,7 +266,7 @@ class Game:
             #timer draw
             # self.draw_text(self.screen, str(self.test_timer.countdown(45)), 24, WHITE, WIDTH/2 - 32, 2)
             #moneybag draw
-            self.draw_text(self.screen, str(self.player.bbag), 64, WHITE, 1, 1)
+            # self.draw_text(self.screen, str(self.player.bbag), 64, WHITE, 1, 1)
             pg.display.flip()
 
     def events(self):
